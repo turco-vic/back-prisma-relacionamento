@@ -12,75 +12,55 @@ class CollectionController {
     }
   }
 
-  // GET /api/personagens/:id
-  async getPersonagemById(req, res) {
+  // GET /colecoes/:id
+  async getCollectionById(req, res) {
     try {
       const { id } = req.params;
 
-      const personagem = await PersonagemModel.findById(id);
+      const colecao = await CollectionModel.findById(id);
 
-      if (!personagem) {
-        return res.status(404).json({ error: "Personagem não encontrado" });
+      if (!colecao) {
+        return res.status(404).json({ error: "Coleção não encontrada!" });
       }
 
-      res.json(personagem);
+      res.json(colecao);
     } catch (error) {
-      console.error("Erro ao buscar personagem:", error);
-      res.status(500).json({ error: "Erro ao buscar personagem" });
+      console.error("Erro ao buscar coleção:", error);
+      res.status(500).json({ error: "Erro ao buscar coleção!" });
     }
   }
 
-  // POST /api/personagens
-  async createPersonagem(req, res) {
+  // POST /colecoes
+  async createCollection(req, res) {
     try {
       // Validação básica
-      const {
-        title,
-        description,
-        episodes,
-        releaseYear,
-        studio,
-        genres,
-        rating,
-        imageUrl,
-      } = req.body;
+      const { name, description, releaseYear } = req.body;
 
-      // Verifica se todos os campos do personagem foram fornecidos
-      if (
-        !title ||
-        !description ||
-        !episodes ||
-        !releaseYear ||
-        !studio ||
-        !genres ||
-        !rating ||
-        !imageUrl
-      ) {
-        return res
-          .status(400)
-          .json({ error: "Todos os campos são obrigatórios" });
+      // Verifica se todos os campos da coleção foram fornecidos
+      if (!name || !releaseYear) {
+        return res.status(400).json({
+          error: "Os campos nome e ano de lançamento são obrigatórios",
+        });
       }
 
-      // Criar o novo personagem
-      const newPersonagem = await PersonagemModel.create(
-        title,
+      // Criar a nova coleção
+      const newCollection = await CollectionModel.create(
+        name,
         description,
-        episodes,
-        releaseYear,
-        studio,
-        genres,
-        rating,
-        imageUrl
+        releaseYear
       );
 
-      if (!newPersonagem) {
-        return res.status(400).json({ error: "Erro ao criar personagem" });
+      if (!newCollection) {
+        return res.status(400).json({ error: "Erro ao criar coleção" });
       }
 
-      res.status(201).json(newPersonagem);
+      res.status(201).json({
+        message: "Coleção criada com sucesso",
+        newCollection,
+      });
     } catch (error) {
-      console.error("Erro ao criar personagem:", error);
-      res.status(500).json({ error: "Erro ao criar personagem" });
+      console.error("Erro ao criar coleção:", error);
+      res.status(500).json({ error: "Erro ao criar coleção" });
     }
   }
 

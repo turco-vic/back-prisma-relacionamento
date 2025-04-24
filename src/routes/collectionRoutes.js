@@ -7,11 +7,11 @@ const collectionRouter = express.Router();
 // GET /colecoes - Listar todas as Coleções
 collectionRouter.get("/", CollectionController.getAllCollections);
 
-// GET /personagens/:id - Obter um Personagem pelo ID
-// personagensRouter.get("/:id", PersonagemController.getPersonagemById);
+// GET /colecoes/:id - Obter uma Coleção pelo ID
+collectionRouter.get("/:id", CollectionController.getCollectionById);
 
-// POST /personagens - Criar um novo Personagem
-// personagensRouter.post("/", PersonagemController.createPersonagem);
+// POST /colecoes - Criar uma nova Coleção
+collectionRouter.post("/", CollectionController.createCollection);
 
 // PUT /personagens/:id - Atualizar um Personagem
 // personagensRouter.put("/:id", PersonagemController.updatePersonagem);
