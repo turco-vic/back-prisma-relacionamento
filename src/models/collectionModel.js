@@ -44,70 +44,48 @@ class CollectionModel {
     return novaColecao;
   }
 
-  // Atualizar um personagem
-  async update(
-    id,
-    title,
-    description,
-    episodes,
-    releaseYear,
-    studio,
-    genres,
-    rating,
-    imageUrl
-  ) {
-    const personagem = await this.findById(id);
+  // Atualizar uma coleção
+  async update(id, name, description, releaseYear) {
+    const colecao = await this.findById(id);
 
-    if (!personagem) {
+    if (!colecao) {
       return null;
     }
 
-    // Atualize o personagem existente com os novos dados
-    const data = {};
-    if (title !== undefined) {
-      data.title = title;
+    // Atualize a coleção existente com os novos dados
+    if (name !== undefined) {
+      name = name;
     }
     if (description !== undefined) {
-      data.description = description;
-    }
-    if (episodes !== undefined) {
-      data.episodes = episodes;
+      description = description;
     }
     if (releaseYear !== undefined) {
-      data.releaseYear = releaseYear;
-    }
-    if (studio !== undefined) {
-      data.studio = studio;
-    }
-    if (genres !== undefined) {
-      data.genres = genres;
-    }
-    if (rating !== undefined) {
-      data.rating = rating;
-    }
-    if (imageUrl !== undefined) {
-      data.imageUrl = imageUrl;
+      releaseYear = releaseYear;
     }
 
-    const personagemUpdated = await prisma.personagem.update({
+    const colecaoAtualizada = await prisma.collection.update({
       where: {
         id: Number(id),
       },
-      data,
+      data: {
+        name,
+        description,
+        releaseYear,
+      },
     });
 
-    return personagemUpdated;
+    return colecaoAtualizada;
   }
 
-  // Remover um personagem
+  // Remover uma coleção
   async delete(id) {
-    const personagem = await this.findById(id);
+    const colecao = await this.findById(id);
 
-    if (!personagem) {
+    if (!colecao) {
       return null;
     }
 
-    await prisma.personagem.delete({
+    await prisma.collection.delete({
       where: {
         id: Number(id),
       },
