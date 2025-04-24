@@ -68,7 +68,7 @@ model Card {
   imageUrl      String?
 
   // Primeiro: configuração da tabela dependente
-  collectionId Int        @unique
+  collectionId Int
   collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   createdAt DateTime @default(now())
